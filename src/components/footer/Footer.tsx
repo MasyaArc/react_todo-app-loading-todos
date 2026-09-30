@@ -14,6 +14,11 @@ export const Footer = ({ todos, filterStatus, setFilterStatus }: Props) => {
   }
 
   const activeTodosCount = todos.filter(todo => !todo.completed).length;
+  const filterOptions = [
+    FilterOption.All,
+    FilterOption.Active,
+    FilterOption.Completed,
+  ];
 
   return (
     <footer className="todoapp__footer" data-cy="Footer">
@@ -23,44 +28,23 @@ export const Footer = ({ todos, filterStatus, setFilterStatus }: Props) => {
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={classNames('filter__link', {
-            selected: filterStatus === FilterOption.All,
-          })}
-          data-cy="FilterLinkAll"
-          onClick={() => {
-            setFilterStatus(FilterOption.All);
-          }}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={classNames('filter__link', {
-            selected: filterStatus === FilterOption.Active,
-          })}
-          data-cy="FilterLinkActive"
-          onClick={() => {
-            setFilterStatus(FilterOption.Active);
-          }}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={classNames('filter__link', {
-            selected: filterStatus === FilterOption.Completed,
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={() => {
-            setFilterStatus(FilterOption.Completed);
-          }}
-        >
-          Completed
-        </a>
+        {filterOptions.map(options => {
+          return (
+            <a
+              href="#/"
+              className={classNames('filter__link', {
+                selected: filterStatus === options,
+              })}
+              data-cy="FilterLinkAll"
+              onClick={() => {
+                setFilterStatus(options);
+              }}
+              key={options}
+            >
+              {options}
+            </a>
+          );
+        })}
       </nav>
 
       <button
